@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Infrastructure.Interfaces.DataAccess;
+using Infrastructure.Interfaces.Services;
 using System.Threading.Tasks;
 
 namespace DataAccess.MsSql.DataAccess
@@ -7,15 +8,17 @@ namespace DataAccess.MsSql.DataAccess
     public class RepositoryUnitOfWork : IRepositoryUnitOfWork
     {
         private readonly AppDbContext _dbContext;
+        private readonly ICurrentUserService _currentUserService;
 
-        public RepositoryUnitOfWork(AppDbContext dbContext)
+        public RepositoryUnitOfWork(AppDbContext dbContext, ICurrentUserService currentUserService)
         {
             _dbContext = dbContext;
+            _currentUserService = currentUserService;
         }
 
         private IProductRepository _productRepository;
         public IProductRepository ProductRepository =>
-            _productRepository ??= new ProductRepository(_dbContext);
+            _productRepository ??= new ProductRepository(_dbContext, _currentUserService);
 
         private IRepository<ProductCategory> _productCategoryRepository;
         public IRepository<ProductCategory> ProductCategoryRepository =>

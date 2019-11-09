@@ -25,9 +25,9 @@ namespace DataAccess.MsSql.DataAccess
         public override void Update(TEntity entity)
         {
             entity.ModifiedAt = DateTime.Now;
-            entity.ModifiedBy = _currentUserService.UserId;
+            entity.ModifiedBy = _currentUserService.UserId.Value;
 
-            base.Add(entity);
+            base.Update(entity);
         }
     }
 }

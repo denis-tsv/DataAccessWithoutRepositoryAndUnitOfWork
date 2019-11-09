@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Infrastructure.Interfaces.DataAccess;
+using Infrastructure.Interfaces.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.MsSql.DataAccess
 {
-    public class ProductRepository : Repository<Product>, IProductRepository
+    public class ProductRepository : AuditableRepository<Product>, IProductRepository
     {
-        public ProductRepository(AppDbContext dbContext) : base(dbContext)
+        public ProductRepository(AppDbContext dbContext, ICurrentUserService currentUserService) : base(dbContext, currentUserService)
         {
         }
 
