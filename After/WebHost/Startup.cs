@@ -1,10 +1,13 @@
+using Autofac;
 using AutoMapper;
 using DataAccess.MsSql;
 using Entities;
-using Handlers.Products.Queries.GetNewProducts;
+using Handlers.Products.Queries.GetProductsByName;
+using Handlers.SaveChangesPostProcessor;
 using Infrastructure.Interfaces.DataAccess;
 using Infrastructure.Interfaces.Services;
-using MediatR;
+using MediatR.Extensions.Autofac.DependencyInjection;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -36,14 +39,23 @@ namespace WebHost
             services.AddScoped<IDbContext>(factory => factory.GetRequiredService<AppDbContext>());
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MsSqlConnection")));
-            
+
+            services.AddScoped<IDbContextPostProcessor>(factory => factory.GetRequiredService<AppDbContextPostProcessor>());
+            services.AddDbContext<AppDbContextPostProcessor>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("MsSqlConnection")));
+
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders(); 
+                .AddDefaultTokenProviders();             
 
-            services.AddMediatR(typeof(GetNewProductsQuery).Assembly);
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());            
+        }
 
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.AddMediatR(typeof(GetProductsByNameQuery).Assembly);
+
+            builder.RegisterGeneric(typeof(SaveChangesRequestPostProcessor<,>)).As(typeof(IRequestPostProcessor<,>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

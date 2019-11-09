@@ -7,20 +7,20 @@ using Infrastructure.Interfaces.DataAccess;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace Handlers.Products.Queries.GetNewProducts
+namespace Handlers.Products.Queries.GetProductsByName
 {
-    public class GetNewProductsQueryHandler : IRequestHandler<GetNewProductsQuery, List<Product>>
+    public class GetProductsByNameQueryHandler : IRequestHandler<GetProductsByNameQuery, List<Product>>
     {
         private readonly IDbContext _dbContext;
 
-        public GetNewProductsQueryHandler(IDbContext dbContext)
+        public GetProductsByNameQueryHandler(IDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public Task<List<Product>> Handle(GetNewProductsQuery request, CancellationToken cancellationToken)
+        public Task<List<Product>> Handle(GetProductsByNameQuery request, CancellationToken cancellationToken)
         {
             return _dbContext.Products
-                .Where(Product.AvailableProductSpec && Product.NewProductSpec)
+                .Where(Product.AvailableSpec && Product.ByNameSpec(request.Name))
                 .ToListAsync();
         }
     }

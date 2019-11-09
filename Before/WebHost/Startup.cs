@@ -3,7 +3,7 @@ using DataAccess.MsSql;
 using DataAccess.MsSql.DataAccess;
 using DataAccess.MsSql.DataAccess.NoRepository;
 using Entities;
-using Handlers.Products.Queries.GetNewProducts;
+using Handlers.Products.Queries.GetProductsByName;
 using Infrastructure.Interfaces.DataAccess;
 using Infrastructure.Interfaces.DataAccess.NoRepository;
 using Infrastructure.Interfaces.QueryableHelpers;
@@ -51,7 +51,7 @@ namespace WebHost
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders(); 
 
-            services.AddMediatR(typeof(GetNewProductsQuery).Assembly);
+            services.AddMediatR(typeof(GetProductsByNameQuery).Assembly);
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }

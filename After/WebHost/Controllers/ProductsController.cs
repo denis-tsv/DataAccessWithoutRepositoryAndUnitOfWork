@@ -1,8 +1,10 @@
 ﻿using Entities;
+using Handlers.Products.Commands.CreateProduct;
 using Handlers.Products.Commands.DeleteProduct;
+using Handlers.Products.Commands.Dto;
 using Handlers.Products.Commands.UpdateProduct;
 using Handlers.Products.Queries.GetAvailableProducts;
-using Handlers.Products.Queries.GetNewProducts;
+using Handlers.Products.Queries.GetProductsByName;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 namespace WebHost.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class ProductsController : ControllerBase
     {
         private IMediator _mediator;
@@ -30,15 +32,24 @@ namespace WebHost.Controllers
         }
 
         [HttpGet]
-        public async Task<IReadOnlyList<Product>> GetNewProducts()
+        public async Task<IReadOnlyList<Product>> GetProductsByName(string name)
         {
-            return await _mediator.Send(new GetNewProductsQuery());
+            return await _mediator.Send(new GetProductsByNameQuery { Name = name });
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CreateProduct([FromBody][Required]ProductDto dto)
+        {
+            await _mediator.Send(new CreateProductCommand { ProductDto = dto });
+
+            return Ok();
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]        
-        public async Task<IActionResult> UpdateProduct(int id, [Required]ProductDto dto)
+        public async Task<IActionResult> UpdateProduct(int id, [FromBody][Required]ProductDto dto)
         {
             await _mediator.Send(new UpdateProductCommand 
             {

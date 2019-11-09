@@ -7,12 +7,13 @@ namespace Entities
 {
     public class Product : AuditableEntity
     {
-        public static readonly Spec<Product> AvailableProductSpec =
+        public static readonly Spec<Product> AvailableSpec =
             new Spec<Product>(x => x.IsAvailable && x.Quantity > 0);
 
-        public static readonly Spec<Product> NewProductSpec =
-            new Spec<Product>(x => (DateTime.Now - x.CreatedAt).TotalDays < 30);
-
+        public static Spec<Product> ByNameSpec(string name)
+        {
+            return new Spec<Product>(x => x.Name.Contains(name));
+        }
 
         public string Name { get; set; }
         public int Quantity { get; set; }

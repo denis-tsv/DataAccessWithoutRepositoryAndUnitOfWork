@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Handlers.Products.Commands.Dto;
+using MediatR;
 
 namespace Handlers.Products.Commands.UpdateProduct
 {

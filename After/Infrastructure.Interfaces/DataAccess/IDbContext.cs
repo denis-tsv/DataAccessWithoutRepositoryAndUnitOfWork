@@ -1,8 +1,5 @@
 ﻿using Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +11,7 @@ namespace Infrastructure.Interfaces.DataAccess
 
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }        
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

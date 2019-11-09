@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace WebHost.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class CategoriesController : ControllerBase
     {
         private IMediator _mediator;
@@ -26,9 +26,9 @@ namespace WebHost.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Category>> GetCategoriesByName(string categoryName)
+        public async Task<List<Category>> GetCategoriesByName(string name)
         {
-            return await _mediator.Send(new GetCategoriesByNameQuery { CategoryName = categoryName });
+            return await _mediator.Send(new GetCategoriesByNameQuery { CategoryName = name });
         }
     }
 }

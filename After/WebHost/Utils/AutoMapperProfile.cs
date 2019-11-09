@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Entities;
-using Handlers.Products.Commands.UpdateProduct;
+using Handlers.Products.Commands.Dto;
 
 namespace WebHost
 {

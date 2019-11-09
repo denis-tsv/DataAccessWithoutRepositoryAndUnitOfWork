@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities;
 
@@ -10,8 +8,11 @@ namespace Infrastructure.Interfaces.DataAccess
     {
         Task<Product> GetWithCategoriesAsync(int id);
 
-        Task<IReadOnlyList<Product>> GetNewProductsAsync();
+        Task<IReadOnlyList<Product>> GetProductsByNameAsync(string name);
 
         Task<IReadOnlyList<Product>> GetAvailableProductsAsync();
+
+        //IQueryable<Product> Products { get; } // anti-pattern
+        //IQueryable<Product> AvailableProducts { get; } // anti-pattern
     }
 }

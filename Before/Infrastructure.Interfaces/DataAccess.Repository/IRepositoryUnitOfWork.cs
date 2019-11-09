@@ -1,7 +1,4 @@
 ﻿using Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Interfaces.DataAccess
@@ -11,5 +8,7 @@ namespace Infrastructure.Interfaces.DataAccess
         IProductRepository ProductRepository { get; }
         IRepository<ProductCategory> ProductCategoryRepository { get; } 
         Task<int> SaveChangesAsync();
+
+        //IQueryable<Product> Products { get; } // anti-pattern
     }
 }

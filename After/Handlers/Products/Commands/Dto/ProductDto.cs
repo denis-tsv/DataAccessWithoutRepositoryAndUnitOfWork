@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Handlers.Products.Commands.UpdateProduct
+namespace Handlers.Products.Commands.Dto
 {
     public class ProductDto
     {

@@ -1,8 +1,5 @@
-﻿using DataAccess.MsSql;
-using Infrastructure.Interfaces.DataAccess;
-using System;
+﻿using Infrastructure.Interfaces.DataAccess;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.MsSql.DataAccess

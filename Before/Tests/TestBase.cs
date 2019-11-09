@@ -1,5 +1,4 @@
 using Infrastructure.Interfaces.QueryableHelpers;
-using System;
 using Xunit;
 
 namespace Tests

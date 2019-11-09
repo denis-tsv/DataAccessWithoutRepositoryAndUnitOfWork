@@ -2,7 +2,7 @@
 using Handlers.Products.Commands.DeleteProduct;
 using Handlers.Products.Commands.UpdateProduct;
 using Handlers.Products.Queries.GetAvailableProducts;
-using Handlers.Products.Queries.GetNewProducts;
+using Handlers.Products.Queries.GetProductsByName;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace WebHost.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class ProductsController : ControllerBase
     {
         private IMediator _mediator;
@@ -30,9 +30,9 @@ namespace WebHost.Controllers
         }
 
         [HttpGet]
-        public async Task<IReadOnlyList<Product>> GetNewProducts()
+        public async Task<IReadOnlyList<Product>> GetProductsByName(string name)
         {
-            return await _mediator.Send(new GetNewProductsQuery());
+            return await _mediator.Send(new GetProductsByNameQuery { Name = name });
         }
 
         [HttpPut("{id}")]

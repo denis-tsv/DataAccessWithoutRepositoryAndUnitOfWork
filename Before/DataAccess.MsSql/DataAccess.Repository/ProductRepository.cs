@@ -1,10 +1,8 @@
 ﻿using Entities;
 using Infrastructure.Interfaces.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.MsSql.DataAccess
@@ -28,12 +26,12 @@ namespace DataAccess.MsSql.DataAccess
             return await GetAvailable().ToListAsync();
         }
 
-        public async Task<IReadOnlyList<Product>> GetNewProductsAsync()
+        public async Task<IReadOnlyList<Product>> GetProductsByNameAsync(string name)
         {
             DbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
             return await GetAvailable()
-                .Where(x => (DateTime.Now - x.CreatedAt).TotalDays < 30)
+                .Where(x => x.Name.Contains(name))
                 .ToListAsync();
         }
 
