@@ -1,7 +1,7 @@
 ﻿using Entities;
-using Infrastructure.Interfaces.DataAccess.NoRepository;
-using Infrastructure.Interfaces.QueryableHelpers;
+using Infrastructure.Interfaces.DataAccess;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -11,17 +11,18 @@ namespace Handlers.Categories.Queries.GetCategoriesByName
 {
     public class GetCategoriesByNameQueryHandler : IRequestHandler<GetCategoriesByNameQuery, List<Category>>
     {
-        private readonly INoRepositoryUnitOfWork _uow;
+        private readonly IDbContext _dbContext;
 
-        public GetCategoriesByNameQueryHandler(INoRepositoryUnitOfWork uow)
+        public GetCategoriesByNameQueryHandler(IDbContext dbContext)
         {
-            _uow = uow;
+            _dbContext = dbContext;
         }
         public Task<List<Category>> Handle(GetCategoriesByNameQuery request, CancellationToken cancellationToken)
         {
-            return _uow.Categories
+            return _dbContext.Categories
+                .AsNoTracking()
                 .Where(x => x.Name.Contains(request.CategoryName))
-                .ToListAsync(); // QueryableHelper
+                .ToListAsync(); // EF Core
         }
     }
 }

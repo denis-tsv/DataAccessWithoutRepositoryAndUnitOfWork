@@ -1,7 +1,7 @@
-﻿using Entities;
+﻿using AutoMapper;
 using Infrastructure.Interfaces.DataAccess;
 using MediatR;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,41 +9,28 @@ namespace Handlers.Products.Commands.UpdateProduct
 {
     public class UpdateProductCommandHandler : AsyncRequestHandler<UpdateProductCommand>
     {
-        private readonly IRepositoryUnitOfWork _uow;
-        public UpdateProductCommandHandler(IRepositoryUnitOfWork uow)
+        private readonly IDbContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public UpdateProductCommandHandler(IDbContext dbContext, IMapper mapper)
         {
-            _uow = uow;
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         protected override async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await _uow.ProductRepository.GetWithCategoriesAsync(request.ProductId);
+            var product = await _dbContext.Products
+                .Include(x => x.ProductCategories)
+                .SingleOrDefaultAsync(x => x.Id == request.ProductId);
 
-            product.Name = request.ProductDto.Name; //TODO AutoMapper
-            
-            var newCategoryIds = request.ProductDto.CategoryIds;
-            var currentCategoryIds = product.ProductCategories.Select(x => x.CategoryId).ToList();
+            _mapper.Map(request.ProductDto, product);
 
-            //delete not existing in DTO categories
-            foreach (var category in product.ProductCategories
-                .Where(x => !newCategoryIds.Contains(x.CategoryId)))
-            {
-                product.ProductCategories.Remove(category);                
-            }
-            
-            //new categories
-            foreach (var categoryId in newCategoryIds.Except(currentCategoryIds))
-            {
-                product.ProductCategories.Add(new ProductCategory 
-                        { 
-                            CategoryId = categoryId, 
-                            ProductId = product.Id 
-                        });
-            }
+            //method Product.UpdateCategories may be used in many handlers if needed
+            product.UpdateCategories(request.ProductDto.CategoryIds);
 
-            _uow.ProductRepository.Update(product); // update ModifiedAt and ModifiedBy properties
-            
-            await _uow.SaveChangesAsync();
+            // update ModifiedAt and ModifiedBy in overriden SaveChanges method
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -8,6 +8,6 @@ namespace Entities
         public int Quantity { get; set; }
         public bool IsAvailable { get; set; }
 
-        public ICollection<ProductCategory> ProductCategories { get; set; } = new HashSet<ProductCategory>();
+        public ICollection<ProductCategory> ProductCategories { get; protected set; } = new HashSet<ProductCategory>();
     }
 }

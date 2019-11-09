@@ -4,7 +4,7 @@ using Entities;
 
 namespace Handlers.Products.Queries.GetNewProducts
 {
-    public class GetNewProductsQuery : IRequest<IReadOnlyList<Product>>
+    public class GetNewProductsQuery : IRequest<List<Product>>
     {
     }
 }

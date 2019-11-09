@@ -1,3 +1,4 @@
+using AutoMapper;
 using DataAccess.MsSql;
 using DataAccess.MsSql.DataAccess;
 using DataAccess.MsSql.DataAccess.NoRepository;
@@ -15,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 using WebHost.Services;
 
 namespace WebHost
@@ -50,6 +52,8 @@ namespace WebHost
                 .AddDefaultTokenProviders(); 
 
             services.AddMediatR(typeof(GetNewProductsQuery).Assembly);
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

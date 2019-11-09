@@ -4,20 +4,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using Entities;
 using Infrastructure.Interfaces.DataAccess;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Handlers.Products.Queries.GetNewProducts
 {
-    public class GetNewProductsQueryHandler : IRequestHandler<GetNewProductsQuery, IReadOnlyList<Product>>
+    public class GetNewProductsQueryHandler : IRequestHandler<GetNewProductsQuery, List<Product>>
     {
-        private readonly IRepositoryUnitOfWork _uow;
+        private readonly IDbContext _dbContext;
 
-        public GetNewProductsQueryHandler(IRepositoryUnitOfWork uow)
+        public GetNewProductsQueryHandler(IDbContext dbContext)
         {
-            _uow = uow;
+            _dbContext = dbContext;
         }
-        public async Task<IReadOnlyList<Product>> Handle(GetNewProductsQuery request, CancellationToken cancellationToken)
+        public Task<List<Product>> Handle(GetNewProductsQuery request, CancellationToken cancellationToken)
         {
-            return await _uow.ProductRepository.GetNewProductsAsync();
+            return _dbContext.Products
+                .Where(Product.AvailableProductSpec && Product.NewProductSpec)
+                .ToListAsync();
         }
     }
 }

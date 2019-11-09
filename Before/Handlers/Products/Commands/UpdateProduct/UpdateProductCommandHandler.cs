@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using AutoMapper;
+using Entities;
 using Infrastructure.Interfaces.DataAccess;
 using MediatR;
 using System.Linq;
@@ -10,16 +11,19 @@ namespace Handlers.Products.Commands.UpdateProduct
     public class UpdateProductCommandHandler : AsyncRequestHandler<UpdateProductCommand>
     {
         private readonly IRepositoryUnitOfWork _uow;
-        public UpdateProductCommandHandler(IRepositoryUnitOfWork uow)
+        private readonly IMapper _mapper;
+
+        public UpdateProductCommandHandler(IRepositoryUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
+            _mapper = mapper;
         }
 
         protected override async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var product = await _uow.ProductRepository.GetWithCategoriesAsync(request.ProductId);
 
-            product.Name = request.ProductDto.Name; //TODO AutoMapper
+            _mapper.Map(request.ProductDto, product); //why we use automapper directly but create an abstraction for entity framework?
             
             var newCategoryIds = request.ProductDto.CategoryIds;
             var currentCategoryIds = product.ProductCategories.Select(x => x.CategoryId).ToList();

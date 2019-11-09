@@ -1,11 +1,8 @@
+using AutoMapper;
 using DataAccess.MsSql;
-using DataAccess.MsSql.DataAccess;
-using DataAccess.MsSql.DataAccess.NoRepository;
 using Entities;
 using Handlers.Products.Queries.GetNewProducts;
 using Infrastructure.Interfaces.DataAccess;
-using Infrastructure.Interfaces.DataAccess.NoRepository;
-using Infrastructure.Interfaces.QueryableHelpers;
 using Infrastructure.Interfaces.Services;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -15,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 using WebHost.Services;
 
 namespace WebHost
@@ -34,14 +32,8 @@ namespace WebHost
             services.AddControllers();
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
-            
-            var queryableExecutor = new EfQueryableExecutor();
-            services.AddSingleton<IQueryableExecutor>(queryableExecutor);
-            QueryableHelper.QueryableExecutor = queryableExecutor;
 
-            services.AddScoped<IRepositoryUnitOfWork, RepositoryUnitOfWork>();
-            services.AddScoped<INoRepositoryUnitOfWork, NoRepositoryUnitOfWork>();
-
+            services.AddScoped<IDbContext>(factory => factory.GetRequiredService<AppDbContext>());
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MsSqlConnection")));
             
@@ -50,6 +42,8 @@ namespace WebHost
                 .AddDefaultTokenProviders(); 
 
             services.AddMediatR(typeof(GetNewProductsQuery).Assembly);
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

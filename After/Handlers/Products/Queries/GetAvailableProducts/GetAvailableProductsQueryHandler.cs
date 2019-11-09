@@ -1,23 +1,27 @@
 ﻿using Entities;
 using Infrastructure.Interfaces.DataAccess;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Handlers.Products.Queries.GetAvailableProducts
 {
-    public class GetAvailableProductsQueryHandler : IRequestHandler<GetAvailableProductsQuery, IReadOnlyList<Product>>
+    public class GetAvailableProductsQueryHandler : IRequestHandler<GetAvailableProductsQuery, List<Product>>
     {
-        private readonly IRepositoryUnitOfWork _uow;
+        private readonly IDbContext _dbContext;
 
-        public GetAvailableProductsQueryHandler(IRepositoryUnitOfWork uow)
+        public GetAvailableProductsQueryHandler(IDbContext dbContext)
         {
-            _uow = uow;
+            _dbContext = dbContext;
         }
-        public async Task<IReadOnlyList<Product>> Handle(GetAvailableProductsQuery request, CancellationToken cancellationToken)
+        public Task<List<Product>> Handle(GetAvailableProductsQuery request, CancellationToken cancellationToken)
         {
-            return await _uow.ProductRepository.GetAvailableProductsAsync();
+            return _dbContext.Products
+                .Where(Product.AvailableProductSpec)
+                .ToListAsync();
         }
     }
 }
