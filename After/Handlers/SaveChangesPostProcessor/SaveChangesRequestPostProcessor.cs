@@ -37,7 +37,7 @@ namespace Handlers.SaveChangesPostProcessor
                         }
                         if (x.State == EntityState.Modified)
                         {
-                            x.Entity.ModifiedBy = _currentUserService.UserId;
+                            x.Entity.ModifiedBy = _currentUserService.UserId.Value;
                             x.Entity.ModifiedAt = now;
                         }
                 });

@@ -36,7 +36,7 @@ namespace DataAccess.MsSql
                         break;
 
                     case EntityState.Modified:
-                        entry.Entity.ModifiedBy = _currentUserService.UserId;
+                        entry.Entity.ModifiedBy = _currentUserService.UserId.Value;
                         entry.Entity.ModifiedAt = now;
                         break;
                 }

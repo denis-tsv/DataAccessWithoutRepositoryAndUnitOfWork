@@ -9,10 +9,11 @@ namespace WebHost.Services
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
             IsAuthenticated = httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
-            if (IsAuthenticated)
-            {
-                UserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-            }
+            UserId = 1;
+            //if (IsAuthenticated)
+            //{
+            //    UserId = int.Parse(httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            //}
         }
         public int? UserId { get; }
 
