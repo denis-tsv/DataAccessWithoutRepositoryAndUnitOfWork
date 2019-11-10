@@ -27,7 +27,8 @@ namespace Entities
 
             //delete not existing categories
             foreach (var category in ProductCategories
-                .Where(x => !newCategoryIds.Contains(x.CategoryId)))
+                .Where(x => !newCategoryIds.Contains(x.CategoryId))
+                .ToList())
             {
                 ProductCategories.Remove(category);
             }

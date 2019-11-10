@@ -30,7 +30,7 @@ namespace Handlers.Products.Commands.UpdateProduct
 
             //delete not existing in DTO categories
             foreach (var category in product.ProductCategories
-                .Where(x => !newCategoryIds.Contains(x.CategoryId)))
+                .Where(x => !newCategoryIds.Contains(x.CategoryId)).ToList())
             {
                 product.ProductCategories.Remove(category);                
             }
