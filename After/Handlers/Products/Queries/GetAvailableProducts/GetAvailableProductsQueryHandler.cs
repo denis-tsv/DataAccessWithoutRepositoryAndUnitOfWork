@@ -20,6 +20,7 @@ namespace Handlers.Products.Queries.GetAvailableProducts
         public Task<List<Product>> Handle(GetAvailableProductsQuery request, CancellationToken cancellationToken)
         {
             return _dbContext.Products
+                .AsNoTracking()
                 .Where(Product.AvailableSpec)
                 .ToListAsync();
         }
