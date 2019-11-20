@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataAccess.MsSql\DataAccess.MsSql.csproj" />
+    <ProjectReference Include="..\Handlers\Handlers.csproj" />
     <ProjectReference Include="..\Infrastructure.Interfaces\Infrastructure.Interfaces.csproj" />
   </ItemGroup>
 

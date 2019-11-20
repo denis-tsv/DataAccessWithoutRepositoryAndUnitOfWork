@@ -1,8 +1,10 @@
 using Entities;
+using Handlers.Products.Queries.GetAvailableProducts;
 using Infrastructure.Interfaces.DataAccess;
 using Infrastructure.Interfaces.QueryableHelpers;
 using Moq;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -28,14 +30,21 @@ namespace Tests
             //it is possible to mock any method of repository or unit of work
             mockRepository.Setup(x => x.GetAvailableProductsAsync())
                 .Returns(Task.FromResult(products));
+            var mockUoW = new Mock<IRepositoryUnitOfWork>();
+            mockUoW.Setup(x => x.ProductRepository).Returns(mockRepository.Object);
+            var handler = new GetAvailableProductsQueryHandler(mockUoW.Object);
 
             // Act
-            var res = await mockRepository.Object.GetAvailableProductsAsync();
+            var res = await handler.Handle(new GetAvailableProductsQuery(), CancellationToken.None);
 
             // Assert
-            Assert.All(res, x => Assert.True(x.IsAvailable));
-            Assert.All(res, x => Assert.NotEqual(0, x.Quantity));
+            Assert.All(res, x => 
+            { 
+                Assert.True(x.IsAvailable);
+                Assert.NotEqual(0, x.Quantity);
+            });
         }
 
     }
 }
+
