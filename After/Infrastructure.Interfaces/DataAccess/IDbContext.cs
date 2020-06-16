@@ -7,11 +7,11 @@ namespace Infrastructure.Interfaces.DataAccess
 {
     public interface IDbContext
     {
-        public DbSet<Product> Products { get; set; }
+        DbSet<Product> Products { get; set; }
 
-        public DbSet<Category> Categories { get; set; }
+        DbSet<Category> Categories { get; set; }
 
-        public DbSet<ProductCategory> ProductCategories { get; set; }        
+        DbSet<ProductCategory> ProductCategories { get; set; }        
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
