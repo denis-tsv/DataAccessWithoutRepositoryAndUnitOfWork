@@ -7,17 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Before", "Before", "{86AA0D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "After", "After", "{75DDC325-903B-4515-911F-9EA18ADA2813}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHost", "Before\WebHost\WebHost.csproj", "{8EA152DE-4692-4C6B-80B7-189B1E5E90F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebHost", "Before\WebHost\WebHost.csproj", "{8EA152DE-4692-4C6B-80B7-189B1E5E90F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Before\Entities\Entities.csproj", "{B3755640-9814-4406-A2CE-D0648D342910}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handlers", "Before\Handlers\Handlers.csproj", "{B0D09000-EC7A-4451-90BF-91533C1D9C5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Handlers", "Before\Handlers\Handlers.csproj", "{B0D09000-EC7A-4451-90BF-91533C1D9C5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Interfaces", "Before\Infrastructure.Interfaces\Infrastructure.Interfaces.csproj", "{CA17227C-ADFC-451D-90C5-07194B88B233}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Interfaces", "Before\Infrastructure.Interfaces\Infrastructure.Interfaces.csproj", "{CA17227C-ADFC-451D-90C5-07194B88B233}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.MsSql", "Before\DataAccess.MsSql\DataAccess.MsSql.csproj", "{371F463C-CCC2-4A08-8ACB-09472269D599}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Before\Tests\Tests.csproj", "{4B7C66AE-78AE-4626-B68D-074477B29DE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Before\Tests\Tests.csproj", "{4B7C66AE-78AE-4626-B68D-074477B29DE4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "After\Entities\Entities.csproj", "{4477200F-B00F-43A4-BFEC-41432E0CC0D7}"
 EndProject
@@ -30,6 +30,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "After\Tests\Tests.csproj", "{17B5C0CE-E1F4-4225-BF68-C69399B465A8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebHost", "After\WebHost\WebHost.csproj", "{711D059A-147F-4240-B4D8-272771B27D2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHost", "ConsoleHost\ConsoleHost.csproj", "{C64F9C97-E636-4B59-A766-D35A8C447F20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,10 @@ Global
 		{711D059A-147F-4240-B4D8-272771B27D2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{711D059A-147F-4240-B4D8-272771B27D2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{711D059A-147F-4240-B4D8-272771B27D2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C64F9C97-E636-4B59-A766-D35A8C447F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C64F9C97-E636-4B59-A766-D35A8C447F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C64F9C97-E636-4B59-A766-D35A8C447F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C64F9C97-E636-4B59-A766-D35A8C447F20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{938B8F27-5041-41E7-907D-838A718CFD0F} = {75DDC325-903B-4515-911F-9EA18ADA2813}
 		{17B5C0CE-E1F4-4225-BF68-C69399B465A8} = {75DDC325-903B-4515-911F-9EA18ADA2813}
 		{711D059A-147F-4240-B4D8-272771B27D2A} = {75DDC325-903B-4515-911F-9EA18ADA2813}
+		{C64F9C97-E636-4B59-A766-D35A8C447F20} = {75DDC325-903B-4515-911F-9EA18ADA2813}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {282A7A08-B3BF-418B-944D-7FD4315EC52D}

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EntityFrameworkCore.CommonTools;
 
 namespace Handlers.Products.Queries.GetAvailableProducts
 {
@@ -20,8 +21,10 @@ namespace Handlers.Products.Queries.GetAvailableProducts
         public Task<List<Product>> Handle(GetAvailableProductsQuery request, CancellationToken cancellationToken)
         {
             return _dbContext.Products
+                .AsVisitable(new EfFunctionsExpander())
                 .AsNoTracking()
-                .Where(Product.AvailableSpec)
+                .Where(x => EfFunctions.Like(x.Name, "%1"))
+                //.Where(x => EF.Functions.Like(x.Name, "%1"))
                 .ToListAsync();
         }
     }

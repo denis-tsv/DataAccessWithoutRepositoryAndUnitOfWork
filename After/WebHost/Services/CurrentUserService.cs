@@ -8,7 +8,7 @@ namespace WebHost.Services
     {
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            IsAuthenticated = httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+            //IsAuthenticated = httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
             UserId = 1;
             //if (IsAuthenticated)
             //{

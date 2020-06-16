@@ -48,7 +48,8 @@ namespace WebHost
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();             
 
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());            
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            EfFunctionsExpander.EfFunctions = new MsSqlEfFunctions();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
