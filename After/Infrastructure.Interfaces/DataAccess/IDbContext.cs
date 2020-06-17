@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Interfaces.DataAccess
 {
@@ -14,5 +15,6 @@ namespace Infrastructure.Interfaces.DataAccess
         DbSet<ProductCategory> ProductCategories { get; set; }        
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+        EntityEntry<TEntity> Entry<TEntity>(TEntity result) where TEntity : class;
     }
 }
