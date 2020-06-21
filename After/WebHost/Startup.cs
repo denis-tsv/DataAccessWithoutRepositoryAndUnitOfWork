@@ -1,7 +1,6 @@
 using Autofac;
 using AutoMapper;
 using DataAccess.MsSql;
-using Entities;
 using Handlers.Products.Queries.GetProductsByName;
 using Handlers.SaveChangesPostProcessor;
 using Infrastructure.Interfaces.DataAccess;
@@ -10,7 +9,6 @@ using MediatR.Extensions.Autofac.DependencyInjection;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +31,7 @@ namespace WebHost
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddHttpContextAccessor();
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
@@ -43,10 +42,6 @@ namespace WebHost
             services.AddScoped<IDbContextPostProcessor>(factory => factory.GetRequiredService<AppDbContextPostProcessor>());
             services.AddDbContext<AppDbContextPostProcessor>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MsSqlConnection")));
-
-            services.AddIdentity<User, Role>()
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();             
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());            
         }

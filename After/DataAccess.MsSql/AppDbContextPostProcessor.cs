@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Infrastructure.Interfaces.DataAccess;
 using Entities;
 
 namespace DataAccess.MsSql
 {
 
-    public class AppDbContextPostProcessor : IdentityDbContext<User, Role, int>, IDbContextPostProcessor
+    public class AppDbContextPostProcessor : DbContext, IDbContextPostProcessor
     {
         public AppDbContextPostProcessor(DbContextOptions<AppDbContextPostProcessor> options)
             : base(options)
@@ -18,7 +17,9 @@ namespace DataAccess.MsSql
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<ProductCategory> ProductCategories { get; set; }
-    
+
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

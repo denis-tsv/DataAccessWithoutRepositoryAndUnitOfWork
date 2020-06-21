@@ -1,7 +1,6 @@
 ﻿using Entities;
 using Infrastructure.Interfaces.DataAccess;
 using Infrastructure.Interfaces.Services;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.MsSql
 {
-    public class AppDbContext : IdentityDbContext<User, Role, int>, IDbContext
+    public class AppDbContext : DbContext, IDbContext
     {
         private readonly ICurrentUserService _currentUserService;
         public AppDbContext(DbContextOptions<AppDbContext> options, ICurrentUserService currentUserService)
@@ -22,6 +21,8 @@ namespace DataAccess.MsSql
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        
+        public DbSet<User> Users { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

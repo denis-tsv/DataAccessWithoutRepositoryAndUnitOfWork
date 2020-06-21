@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 
 namespace WebHost.Services
 {
@@ -8,7 +7,7 @@ namespace WebHost.Services
     {
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            IsAuthenticated = httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+            IsAuthenticated = httpContextAccessor?.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
             UserId = 1;
             //if (IsAuthenticated)
             //{
