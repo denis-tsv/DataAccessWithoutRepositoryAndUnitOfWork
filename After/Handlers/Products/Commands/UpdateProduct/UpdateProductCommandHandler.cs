@@ -20,9 +20,13 @@ namespace Handlers.Products.Commands.UpdateProduct
 
         protected override async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await _dbContext.Products
-                .Include(x => x.ProductCategories)
-                .SingleOrDefaultAsync(x => x.Id == request.ProductId);
+            //var product = await _dbContext.Products
+            //    .Include(x => x.ProductCategories)
+            //    .SingleOrDefaultAsync(x => x.Id == request.ProductId);
+
+            //var product = await _dbContext.Products.SingleOrDefaultFullAsync(request.ProductId);
+
+            var product = await _dbContext.FindFullProductAsync(request.ProductId);
 
             _mapper.Map(request.ProductDto, product);
 

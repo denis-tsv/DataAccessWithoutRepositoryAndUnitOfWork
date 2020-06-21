@@ -6,9 +6,9 @@ namespace Infrastructure.Interfaces.DataAccess.NoRepository
 {
     public interface INoRepositoryUnitOfWork
     {
-        public IQueryable<Product> Products { get; }
+        IQueryable<Product> Products { get; }
 
-        public IQueryable<Category> Categories { get; }
+        IQueryable<Category> Categories { get; }
 
         void Add<TEntity>(TEntity entity);
 

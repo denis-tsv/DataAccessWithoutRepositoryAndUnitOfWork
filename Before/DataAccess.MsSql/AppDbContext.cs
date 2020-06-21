@@ -1,10 +1,9 @@
 ﻿using Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.MsSql
 {
-    public class AppDbContext : IdentityDbContext<User, Role, int>
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -15,6 +14,8 @@ namespace DataAccess.MsSql
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
