@@ -5,11 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.MsSql.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
     [Migration("20200621074859_Initial")]
     partial class Initial
     {
